@@ -1,0 +1,80 @@
+/**
+ * onoff.css
+ * Author: http://proto.io/freebies/onoff/
+ * Author: Timmy Willison
+ */
+
+$font: Trebuchet, Arial, sans-serif;
+$width: 70px;
+$borderSize: 2px;
+$animationTime: 0.2s;
+$easing: ease-in;
+
+$switchBackground: #ffffff;
+$switchBorderColor: #999999;
+$switchWidth: 18px;
+$switchMargin: 4px;
+
+.onoffswitch {
+	position: relative; width: $width;
+	user-select: none;
+}
+
+.onoffswitch-checkbox {
+	display: none;
+}
+
+.onoffswitch-label {
+	display: block; overflow: hidden;
+	cursor: pointer;
+	border: $borderSize solid $switchBorderColor;
+	border-radius: 20px;
+}
+
+.onoffswitch-inner {
+	width: 200%;
+	margin-left: -100%;
+	transition: margin $animationTime $easing;
+}
+
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+	float: left; padding: 0;
+	width: 50%; height: 26px;
+	color: white;
+	font: bold 14px/26px $font;
+	box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+	content: "YES";
+	padding-left: 10px;
+	color: #FFFFFF;
+	background-color: #2FCCFF;
+}
+
+.onoffswitch-inner:after {
+	content: "NO";
+	padding-right: 10px;
+	color: #999999;
+	background-color: #EEEEEE;
+	text-align: right;
+}
+
+.onoffswitch-switch {
+	position: absolute;
+	top: 0; bottom: 0;
+	right: $width - $switchWidth - ($switchMargin * 2) - ($borderSize * 2);
+	width: $switchWidth; margin: $switchMargin;
+	background: $switchBackground;
+	border: $borderSize solid $switchBorderColor;
+	border-radius: 20px;
+	transition: right $animationTime $easing, box-shadow $animationTime $easing;
+}
+
+// Checked
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+	margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+	right: 0px;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>On-Off Toggle Switches</title>
+  <link rel="stylesheet" href="dist/onoff.css" media="screen" />
+  <style type="text/css">
+    .onoffswitch { margin: 100px auto; }
+  </style>
+</head>
+<body>
+  <input type="checkbox" checked />
+  <script src="test/libs/require.js"></script>
+  <script>
+    require({
+      paths: { jquery: 'test/libs/jquery' }
+    }, [ 'jquery', 'dist/jquery.onoff' ], function( $ ) {
+      $('input[type=checkbox]').onoff();
+    });
+  </script>
+</body>
+</html>

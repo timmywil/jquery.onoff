@@ -6,20 +6,26 @@ module.exports = function (grunt) {
 	// Show elapsed time at the end
 	require('time-grunt')(grunt);
 
-	// Project configuration.
+	// Project configuration
 	grunt.initConfig({
-		// Metadata.
+		// Metadata
 		pkg: grunt.file.readJSON('package.json'),
 		banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
 			'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 			'<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
 			'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
 			' Licensed MIT */\n',
-		// Task configuration.
+		// Task configuration
+		autoprefixer: {
+			onoff: {
+				src: 'src/onoff.css',
+				dest: 'dist/onoff.css'
+			}
+		},
 		bowercopy: {
 			options: {
 				clean: true,
-				destPrefix: 'libs'
+				destPrefix: 'test/libs'
 			},
 			test: {
 				files: {
@@ -27,17 +33,6 @@ module.exports = function (grunt) {
 					'qunit': 'qunit/qunit',
 					'require.js': 'requirejs/require.js'
 				}
-			}
-		},
-		build: {
-			manifest: {
-				src: 'onoff.jquery.json'
-			},
-			bower: {
-				src: 'bower.json'
-			},
-			readme: {
-				src: 'README.md'
 			}
 		},
 		clean: {
@@ -78,7 +73,7 @@ module.exports = function (grunt) {
 				options: {
 					jshintrc: 'test/.jshintrc'
 				},
-				src: ['test/**/*.js']
+				src: ['test/*.js']
 			}
 		},
 		jsonlint: {
@@ -91,6 +86,15 @@ module.exports = function (grunt) {
 				options: {
 					urls: ['http://localhost:9000/test/<%= pkg.name %>.html']
 				}
+			}
+		},
+		sass: {
+			onoff: {
+				options: {
+					style: 'expanded'
+				},
+				src: 'src/onoff.scss',
+				dest: 'src/onoff.css'
 			}
 		},
 		uglify: {
@@ -109,11 +113,26 @@ module.exports = function (grunt) {
 			},
 			src: {
 				files: '<%= jshint.src.src %>',
-				tasks: ['jshint:src', 'qunit']
+				tasks: ['jshint:src', 'concat', 'qunit']
 			},
 			test: {
-				files: '<%= jshint.test.src %>',
+				files: ['<%= jshint.test.src %>', 'test/onoff.html'],
 				tasks: ['jshint:test', 'qunit']
+			},
+			css: {
+				files: 'src/onoff.scss',
+				tasks: ['sass', 'autoprefixer']
+			}
+		},
+		version: {
+			manifest: {
+				src: 'onoff.jquery.json'
+			},
+			bower: {
+				src: 'bower.json'
+			},
+			readme: {
+				src: 'README.md'
 			}
 		}
 	});
@@ -152,8 +171,19 @@ module.exports = function (grunt) {
 		}
 	);
 
-	// Default task.
-	grunt.registerTask('default', ['jsonlint', 'jshint', 'connect', 'qunit', 'clean', 'version', 'concat', 'uglify']);
+	// Default task
+	grunt.registerTask('default', [
+		'jsonlint',
+		'clean',
+		'sass',
+		'autoprefixer',
+		'jshint',
+		'version',
+		'concat',
+		'connect',
+		'qunit',
+		'uglify'
+	]);
 	grunt.registerTask('server', ['connect', 'watch']);
 	grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
 };

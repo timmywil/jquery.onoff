@@ -6,85 +6,106 @@
  * Released under the MIT license
  */
 
-(function( global, factory ) {
+(function(global, factory) {
 	// AMD
-	if ( typeof define === 'function' && define.amd ) {
-		define( [ 'jquery' ], factory );
+	if (typeof define === 'function' && define.amd) {
+		define([ 'jquery' ], factory);
 	// CommonJS/Browserify
-	} else if ( typeof exports === 'object' ) {
-		factory( require('jquery') );
+	} else if (typeof exports === 'object') {
+		factory(require('jquery'));
 	// Global
 	} else {
-		factory( global.jQuery );
+		factory(global.jQuery);
 	}
-}( this, function( $ ) {
+}(this, function($) {
 	'use strict';
 
+	// Lift touch properties using fixHooks
+	var touchHook = {
+		props: [ 'clientX', 'clientY' ],
+		/**
+		 * Support: Android
+		 * Android sets clientX/Y to 0 for any touch event
+		 * Attach first touch's clientX/Y if not set correctly
+		 */
+		filter: function( event, originalEvent ) {
+			var touch;
+			if ( !originalEvent.clientX && originalEvent.touches && (touch = originalEvent.touches[0]) ) {
+				event.clientX = touch.clientX;
+				event.clientY = touch.clientY;
+			}
+			return event;
+		}
+	};
+	$.each([ 'touchstart', 'touchmove', 'touchend' ], function( i, name ) {
+		$.event.fixHooks[ name ] = touchHook;
+	});
+
+	var count = 1;
 	var datakey = '_onoff';
 	var slice = Array.prototype.slice;
+	// Support pointer events if available
+	var pointerEvents = !!window.PointerEvent;
 
 	/**
 	 * Create an OnOff object for a given element
 	 * @constructor
 	 * @param {Element} elem - Element to use pan and zoom
-	 * @param {Object} [options] - An object literal containing options to override default options
-	 *  (See OnOff.defaults)
+	 * @param {Object} [options] - An object literal containing options
+	 *  to override default options (See OnOff.defaults)
 	 */
-	function OnOff( elem, options ) {
+	function OnOff(elem, options) {
 
 		// Allow instantiation without `new` keyword
-		if ( !(this instanceof OnOff) ) {
-			return new OnOff( elem, options );
+		if (!(this instanceof OnOff)) {
+			return new OnOff(elem, options);
 		}
 
 		// Sanity checks
-		if ( elem.nodeName !== 'input' || elem.type !== 'checkbox' ) {
+		if (elem.nodeName.toLowerCase() !== 'input' || elem.type !== 'checkbox') {
 			return $.error('OnOff should be called on checkboxes');
 		}
 
 		// Don't remake
-		var d = $.data( elem, datakey );
-		if ( d ) {
+		var d = $.data(elem, datakey);
+		if (d) {
 			return d;
 		}
 
 		// Extend default with given object literal
 		// Each instance gets its own options
-		this.options = options = $.extend( {}, OnOff.defaults, options );
+		this.options = options = $.extend({}, OnOff.defaults, options);
 		this.elem = elem;
-		var $elem = this.$elem = $(elem);
+		this.$elem = $(elem).addClass(options.className);
 		this.$doc = $(elem.ownerDocument || document);
-		// Add guid to event namespace
-		this.options.namespace += $.guid++;
 
+		// Add guid to event namespace
+		options.namespace += $.guid++;
+
+		// Add an ID if none has been added
+		if (!elem.id) {
+			elem.id = 'onoffswitch' + count++;
+		}
+
+		// Enable
 		this.enable();
 
 		// Save the instance
-		$.data( elem, datakey, this );
+		$.data(elem, datakey, this);
 	}
 
 	OnOff.defaults = {
 		// The event namespace
 		// Should always be non-empty
 		// Used to bind jQuery events without collisions
-		namespace: '.onoff'
+		namespace: '.onoff',
+
+		// The class added to the checkbox (see the CSS file)
+		className: 'onoffswitch-checkbox'
 	};
 
 	OnOff.prototype = {
 		constructor: OnOff,
-
-		/**
-		 * Trigger a onoff event on our element
-		 * The event is passed the Panzoom instance
-		 * @param {String|jQuery.Event} event
-		 * @param {Mixed} arg1[, arg2, arg3, ...] Arguments to append to the trigger
-		 */
-		_trigger: function ( event ) {
-			if ( typeof event === 'string' ) {
-				event = 'panzoom' + event;
-			}
-			this.$elem.trigger( event, [this].concat(slice.call( arguments, 1 )) );
-		},
 
 		/**
 		 * @returns {Panzoom} Returns the instance
@@ -94,15 +115,129 @@
 		},
 
 		/**
-		 * Binds all necessary events
+		 * Wrap the checkbox and add the label element
 		 */
-		_bind: function() {
+		_wrap: function() {
+			var elem = this.elem;
+			var $elem = this.$elem;
+
+			// Get or create elem wrapper
+			var $con = $elem.parent('.onoffswitch');
+			if (!$con.length) {
+				$elem.wrap('<div class="onoffswitch"></div>');
+				$con = $elem.parent();
+			}
+			this.$con = $con;
+
+			// Get or create label
+			var $label = $elem.next('label[for="' + elem.id + '"]');
+			if (!$label.length) {
+				$label = $('<label/>')
+					.attr('for', elem.id)
+					.insertAfter(elem);
+			}
+			this.$label = $label.addClass('onoffswitch-label');
+
+			// Inner
+			var $inner = $label.find('.onoffswitch-inner');
+			if (!$inner.length) {
+				$inner = $('<div/>')
+					.addClass('onoffswitch-inner')
+					.prependTo($label);
+			}
+			this.$inner = $inner;
+
+			// Switch
+			var $switch = $label.find('.onoffswitch-switch');
+			if (!$switch.length) {
+				$switch = $('<div/>')
+					.addClass('onoffswitch-switch')
+					.appendTo($label);
+			}
+			this.$switch = $switch;
 		},
 
 		/**
-		 * Enable or re-enable the panzoom instance
+		 * Handles the move event on the switch
+		 */
+		_handleMove: function(e) {
+			if (this.disabled) return;
+			this.moved = true;
+			this.lastX = e.clientX;
+			var right = Math.max(Math.min(this.startX - this.lastX, this.maxRight), 0);
+			this.$switch.css('right', right);
+			this.$inner.css('marginLeft', -(right / this.maxRight) * 100 + '%');
+		},
+
+		/**
+		 * Bind the move and end events to the document
+		 */
+		_startMove: function(e) {
+			// Prevent default to avoid touch event collision
+			e.preventDefault();
+			var moveType, endType;
+			if (pointerEvents) {
+				moveType = 'pointermove';
+				endType = 'pointerup';
+			} else if (e.type === 'touchstart') {
+				moveType = 'touchmove';
+				endType = 'touchend';
+			} else {
+				moveType = 'mousemove';
+				endType = 'mouseup';
+			}
+			var elem = this.elem;
+			var ns = this.options.namespace;
+			// Disable transitions
+			var $handle = this.$switch;
+			var handle = $handle[0];
+			var $t = this.$inner.add($handle).css('transition', 'none');
+
+			// Starting values
+			this.maxRight = this.$con.width() - $handle.width() -
+				$.css(handle, 'margin-left', true) -
+				$.css(handle, 'margin-right', true) -
+				$.css(handle, 'border-left-width', true) -
+				$.css(handle, 'border-right-width', true);
+			var startChecked = elem.checked;
+			this.moved = false;
+			this.startX = e.clientX + (startChecked ? 0 : this.maxRight);
+
+			// Bind document events
+			var self = this;
+			var $doc = this.$doc
+				.on(moveType + ns, $.proxy(this._handleMove, this))
+				.on(endType + ns, function() {
+					// Reenable transition
+					$t.css('transition', '');
+					$doc.off(ns);
+
+					// If there was a move
+					// ensure the proper checked value
+					if (self.moved) {
+						elem.checked = self.lastX > (self.startX - self.maxRight / 2);
+					}
+					setTimeout(function() {
+						// Normalize CSS and animate
+						self.$switch.css('right', '');
+						self.$inner.css('marginLeft', '');
+					});
+				});
+		},
+
+		/**
+		 * Binds all necessary events
+		 */
+		_bind: function() {
+			var type = pointerEvents ? 'pointerdown' : 'mousedown touchstart';
+			this.$switch.on(type, $.proxy(this._startMove, this));
+		},
+
+		/**
+		 * Enable or re-enable the onoff instance
 		 */
 		enable: function() {
+			this._wrap();
 			this._bind();
 			this.disabled = false;
 		},
@@ -111,10 +246,14 @@
 		 * Unbind all events
 		 */
 		_unbind: function() {
+			var ns = this.options.namespace;
+			this.$doc.off(ns);
+			this.$switch.off(ns);
 		},
 
 		/**
-		 * Disable panzoom
+		 * Disable onoff
+		 * Removes all added HTML
 		 */
 		disable: function() {
 			this.disabled = true;
@@ -122,85 +261,95 @@
 		},
 
 		/**
-		 * @returns {Boolean} Returns whether the current panzoom instance is disabled
+		 * Removes all onoffswitch HTML and leaves the checkbox
+		 */
+		unwrap: function() {
+			this.$label.remove();
+			this.$elem.unwrap();
+		},
+
+		/**
+		 * @returns {Boolean} Returns whether the current onoff instance is disabled
 		 */
 		isDisabled: function() {
 			return this.disabled;
 		},
 
 		/**
-		 * Destroy the panzoom instance
+		 * Destroy the onoff instance
 		 */
 		destroy: function() {
 			this.disable();
-			$.removeData( this.elem, datakey );
+			$.removeData(this.elem, datakey);
 		},
 
 		/**
 		 * Get/set option on an existing instance
-		 * @returns {Array|undefined} If getting, returns an array of all values
-		 *   on each instance for a given key. If setting, continue chaining by returning undefined.
+		 * @returns {Array|undefined} If getting, returns an array of
+		 *  all values on each instance for a given key. If setting,
+		 *  continue chaining by returning undefined.
 		 */
-		option: function( key, value ) {
-			var options;
-			if ( !key ) {
+		option: function(key, value) {
+			var newOpts;
+			var options = this.options;
+			if (!key) {
 				// Avoids returning direct reference
-				return $.extend( {}, this.options );
+				return $.extend({}, options);
 			}
 
-			if ( typeof key === 'string' ) {
-				if ( arguments.length === 1 ) {
-					return this.options[ key ] !== undefined ?
-						this.options[ key ] :
+			if (typeof key === 'string') {
+				if (arguments.length === 1) {
+					return options[ key ] !== undefined ?
+						options[ key ] :
 						null;
 				}
-				options = {};
-				options[ key ] = value;
+				newOpts = {};
+				newOpts[ key ] = value;
 			} else {
-				options = key;
+				newOpts = key;
 			}
 
 			// Set options
-			$.each( options, $.proxy(function( k, val ) {
-				switch( k ) {
-					case 'eventNamespace':
-						this._unbind();
+			var self = this;
+			$.each(newOpts, function(k, val) {
+				if (k === 'namespace') {
+					self._unbind();
 				}
-				this.options[ k ] = val;
-				switch( k ) {
-					case 'eventNamespace':
-						this._bind();
+				options[ k ] = val;
+				if (k === 'namespace') {
+					self._bind();
 				}
-			}, this));
+			});
 		}
 	};
 
 	/**
 	 * Extend jQuery
-	 * @param {Object|String} options - The name of a method to call on the prototype
-	 *  or an object literal of options
-	 * @returns {jQuery|Mixed} jQuery instance for regular chaining or the return value(s) of a panzoom method call
+	 * @param {Object|String} options - The name of a method to call
+	 *  on the prototype or an object literal of options
+	 * @returns {jQuery|Mixed} jQuery instance for regular chaining or
+	 *  the return value(s) of a onoff method call
 	 */
-	$.fn.onoff = function( options ) {
+	$.fn.onoff = function(options) {
 		var instance, args, m, ret;
 
 		// Call methods widget-style
-		if ( typeof options === 'string' ) {
+		if (typeof options === 'string') {
 			ret = [];
-			args = slice.call( arguments, 1 );
+			args = slice.call(arguments, 1);
 			this.each(function() {
-				instance = $.data( this, datakey );
+				instance = $.data(this, datakey);
 
-				if ( !instance ) {
-					ret.push( undefined );
+				if (!instance) {
+					ret.push(undefined);
 
 				// Ignore methods beginning with `_`
-				} else if ( options.charAt(0) !== '_' &&
+				} else if (options.charAt(0) !== '_' &&
 					typeof (m = instance[ options ]) === 'function' &&
 					// If nothing is returned, do not add to return values
-					(m = m.apply( instance, args )) !== undefined ) {
+					(m = m.apply(instance, args)) !== undefined) {
 
-					ret.push( m );
+					ret.push(m);
 				}
 			});
 
@@ -212,7 +361,7 @@
 				this;
 		}
 
-		return this.each(function() { new OnOff( this, options ); });
+		return this.each(function() { new OnOff(this, options); });
 	};
 
 	return OnOff;

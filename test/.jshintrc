@@ -1,5 +1,4 @@
 {
-  "curly": true,
   "eqeqeq": true,
   "immed": true,
   "latedef": true,
@@ -12,6 +11,7 @@
   "eqnull": true,
   "browser": true,
   "globals": {
+    "jQuery": true,
     "QUnit": true,
     "module": true,
     "test": true,

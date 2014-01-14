@@ -1,5 +1,4 @@
 {
-  "curly": true,
   "eqeqeq": true,
   "immed": true,
   "latedef": true,
@@ -13,6 +12,7 @@
   "browser": true,
   "globals": {
     "define": true,
-    "require": true
+    "require": true,
+    "console": false
   }
 }
