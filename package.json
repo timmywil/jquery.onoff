@@ -1,0 +1,37 @@
+{
+  "name": "onoff",
+  "version": "0.0.1",
+  "description": "Interactive, accessible toggle switches for the web",
+  "keywords": [
+    "jquery-plugin"
+  ],
+  "homepage": "https://github.com/timmywil/jquery.onoff",
+  "author": {
+    "name": "Timmy Willison",
+    "email": "timmywillisn@gmail.com",
+    "url": "https://github.com/timmywil"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timmywil/jquery.onoff.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-bowercopy": "~0.6.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-qunit": "~0.3.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-jsonlint": "~1.0.4",
+    "load-grunt-tasks": "~0.2.0",
+    "time-grunt": "~0.2.3"
+  }
+}

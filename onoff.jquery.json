@@ -1,0 +1,28 @@
+{
+  "name": "onoff",
+  "title": "On-Off Toggle Switches",
+  "description": "Interactive, accessible toggle switches for the web",
+  "version": "0.0.1",
+  "homepage": "https://github.com/timmywil/jquery.onoff",
+  "author": {
+    "name": "Timmy Willison",
+    "url": "https://github.com/timmywil"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timmywil/jquery.onoff.git"
+  },
+  "bugs": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "~1.10.0"
+  },
+  "keywords": [
+    "jquery-plugin"
+  ]
+}
