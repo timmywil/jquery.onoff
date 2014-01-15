@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		// Metadata
 		pkg: grunt.file.readJSON('package.json'),
-		banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+		banner: '/** <%= pkg.name %> - v<%= pkg.version %> - ' +
 			'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 			'<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
 			'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 		autoprefixer: {
 			onoff: {
 				src: 'src/onoff.css',
-				dest: 'dist/onoff.css'
+				dest: 'dist/jquery.onoff.css'
 			}
 		},
 		bowercopy: {
@@ -84,7 +84,7 @@ module.exports = function (grunt) {
 		qunit: {
 			all: {
 				options: {
-					urls: ['http://localhost:9000/test/<%= pkg.name %>.html']
+					urls: ['http://localhost:9000/test/index.html']
 				}
 			}
 		},
@@ -116,7 +116,7 @@ module.exports = function (grunt) {
 				tasks: ['jshint:src', 'concat', 'qunit']
 			},
 			test: {
-				files: ['<%= jshint.test.src %>', 'test/onoff.html'],
+				files: ['<%= jshint.test.src %>', 'test/index.html'],
 				tasks: ['jshint:test', 'qunit']
 			},
 			css: {

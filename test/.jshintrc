@@ -12,6 +12,8 @@
   "browser": true,
   "globals": {
     "jQuery": true,
+    "define": true,
+    "require": true,
     "QUnit": true,
     "module": true,
     "test": true,

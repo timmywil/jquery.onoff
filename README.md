@@ -18,11 +18,13 @@ Customize the look of your toggle switch using [proto.io's generator](http://pro
 
 # Not Yet Released
 
-<!-- Download the [production version][min] or the [development version][max].
+<!-- Download the [production version][min] or the [development version][max] and grab the [CSS][css].
 
 [min]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.min.js
 [max]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.js
+[css]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.css
  -->
+
 ### With AMD
 
 ```js
@@ -70,8 +72,111 @@ Then initialize onoff:
 $('input[type=checkbox]').onoff();
 ```
 
-## Documentation
-_(Coming soon)_
+## Options
+
+```js
+OnOff.defaults = {
+  // The event namespace
+  // Should always be non-empty
+  // Used to bind jQuery events without collisions
+  namespace: '.onoff',
+
+  // The class added to the checkbox
+  className: 'onoffswitch-checkbox'
+};
+```
+
+## Methods
+
+All methods can be called widget-style.
+
+### `option()`
+Returns: If getting, the option value; if setting, the `jQuery` collection for chaining.
+
+The `option()` method can be called with no arguments to return all options.
+
+```js
+var options = $input.onoff('option');
+```
+
+Pass a key to retrieve a single option.
+
+```js
+var eventNamespace = $input.onoff('option', 'namespace');
+```
+
+Pass a key and value or an object of key/value pairs to set options.
+
+```js
+$input.onoff('option', 'namespace', 'newspace');
+$input.onoff('option', {
+  namespace: 'newspace',
+  className: 'newclass'
+});
+```
+
+### `disable()`
+Returns: `jQuery` for chaining
+
+Disables the OnOff instance and unbinds all events.
+
+```js
+$input.onoff('disable');
+```
+
+### `isDisabled()`
+Returns: `Boolean`
+
+Returns whether the OnOff instance is currently disabled.
+
+```js
+var disabled = $input.onoff('isDisabled');
+```
+
+### `enable()`
+Returns: `jQuery` for chaining
+
+Enables the OnOff instance, rebinding events and ensuring the proper HTML.
+
+```js
+$input.onoff('enable');
+```
+
+### `wrap()`
+Returns: `jQuery` for chaining
+
+Ensures the HTML for the toggle switch is correct. This method only adds any missing HTML.
+
+```js
+$input.onoff('wrap');
+```
+
+### `unwrap()`
+Returns: `jQuery` for chaining
+
+Removes HTML related to OnOff, leaving only the checkbox.
+
+```js
+$input.onoff('unwrap');
+```
+
+### `destroy()`
+Returns: `jQuery` for chaining
+
+Disables the OnOff instance and removes data, but does not call `unwrap()`.
+
+```js
+$input.onoff('destroy');
+```
+
+### `instance()`
+Returns: `OnOff`
+
+Returns the OnOff instance.
+
+```js
+var instance = $input.onoff('instance');
+```
 
 ## Release History
 _(Nothing yet)_

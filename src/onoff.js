@@ -42,7 +42,6 @@
 	});
 
 	var count = 1;
-	var datakey = '_onoff';
 	var slice = Array.prototype.slice;
 	// Support pointer events if available
 	var pointerEvents = !!window.PointerEvent;
@@ -67,7 +66,7 @@
 		}
 
 		// Don't remake
-		var d = $.data(elem, datakey);
+		var d = $.data(elem, OnOff.datakey);
 		if (d) {
 			return d;
 		}
@@ -91,8 +90,10 @@
 		this.enable();
 
 		// Save the instance
-		$.data(elem, datakey, this);
+		$.data(elem, OnOff.datakey, this);
 	}
+
+	OnOff.datakey = '_onoff';
 
 	OnOff.defaults = {
 		// The event namespace
@@ -117,7 +118,7 @@
 		/**
 		 * Wrap the checkbox and add the label element
 		 */
-		_wrap: function() {
+		wrap: function() {
 			var elem = this.elem;
 			var $elem = this.$elem;
 
@@ -212,12 +213,12 @@
 					$t.css('transition', '');
 					$doc.off(ns);
 
-					// If there was a move
-					// ensure the proper checked value
-					if (self.moved) {
-						elem.checked = self.lastX > (self.startX - self.maxRight / 2);
-					}
 					setTimeout(function() {
+						// If there was a move
+						// ensure the proper checked value
+						if (self.moved) {
+							elem.checked = self.lastX > (self.startX - self.maxRight / 2);
+						}
 						// Normalize CSS and animate
 						self.$switch.css('right', '');
 						self.$inner.css('marginLeft', '');
@@ -229,6 +230,7 @@
 		 * Binds all necessary events
 		 */
 		_bind: function() {
+			this._unbind();
 			var type = pointerEvents ? 'pointerdown' : 'mousedown touchstart';
 			this.$switch.on(type, $.proxy(this._startMove, this));
 		},
@@ -237,7 +239,8 @@
 		 * Enable or re-enable the onoff instance
 		 */
 		enable: function() {
-			this._wrap();
+			// Ensures the correct HTML before binding
+			this.wrap();
 			this._bind();
 			this.disabled = false;
 		},
@@ -262,8 +265,11 @@
 
 		/**
 		 * Removes all onoffswitch HTML and leaves the checkbox
+		 * Also disables this instance
 		 */
 		unwrap: function() {
+			// Destroys this OnOff
+			this.disable();
 			this.$label.remove();
 			this.$elem.unwrap();
 		},
@@ -280,7 +286,7 @@
 		 */
 		destroy: function() {
 			this.disable();
-			$.removeData(this.elem, datakey);
+			$.removeData(this.elem, OnOff.datakey);
 		},
 
 		/**
@@ -310,16 +316,23 @@
 			}
 
 			// Set options
-			var self = this;
-			$.each(newOpts, function(k, val) {
-				if (k === 'namespace') {
-					self._unbind();
+			$.each(newOpts, $.proxy(function(k, val) {
+				switch(k) {
+					case 'namespace':
+						this._unbind();
+						break;
+					case 'className':
+						this.$elem.removeClass(options.className);
 				}
 				options[ k ] = val;
-				if (k === 'namespace') {
-					self._bind();
+				switch(k) {
+					case 'namespace':
+						this._bind();
+						break;
+					case 'className':
+						this.$elem.addClass(val);
 				}
-			});
+			}, this));
 		}
 	};
 
@@ -338,7 +351,7 @@
 			ret = [];
 			args = slice.call(arguments, 1);
 			this.each(function() {
-				instance = $.data(this, datakey);
+				instance = $.data(this, OnOff.datakey);
 
 				if (!instance) {
 					ret.push(undefined);
@@ -364,5 +377,5 @@
 		return this.each(function() { new OnOff(this, options); });
 	};
 
-	return OnOff;
+	return ($.OnOff = OnOff);
 }));

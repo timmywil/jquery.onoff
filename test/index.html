@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>On-Off Toggle Switch Test Suite</title>
-  <!-- Load local jQuery. -->
-  <script src="libs/jquery.js"></script>
-  <!-- Load local QUnit. -->
-  <link rel="stylesheet" href="libs/qunit/qunit.css" media="screen">
+  <link rel="stylesheet" href="libs/qunit/qunit.css" media="screen" />
   <script src="libs/qunit/qunit.js"></script>
-  <!-- Load local lib and tests. -->
-  <script src="../dist/jquery.onoff.js"></script>
-  <script src="onoff_test.js"></script>
-  <script>jQuery.noConflict(true);</script>
+  <script>QUnit.config.autostart = false;</script>
+  <script data-main="onoff_test" src="libs/require.js"></script>
 </head>
 <body>
   <div id="qunit"></div>

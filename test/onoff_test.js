@@ -1,4 +1,15 @@
-(function($) {
+require({
+	paths: { jquery: 'libs/jquery' }
+}, [
+	'jquery',
+	'../dist/jquery.onoff'
+], function($, OnOff) {
+	// noConflict for tests
+	$.noConflict(true);
+
+	// Start testing
+	start();
+
 	/*
 		======== A Handy Little QUnit Reference ========
 		http://api.qunitjs.com/
@@ -20,9 +31,29 @@
 			throws(block, [expected], [message])
 	*/
 
+	// Initialize inputs for every test
+	var setupInstance = {
+		setup: function() {
+			this.$inputs = $('#qunit-fixture input[type=checkbox]').onoff();
+		}
+	};
+
+	/* Environment
+	---------------------------------------------------------------------- */
+	module('environment');
+
+	test('vars', function() {
+		expect(3);
+		equal(window.jQuery, undefined, 'No jQuery globals');
+		equal(window.$, undefined, 'No jQuery globals');
+		equal($.isFunction(OnOff), true, 'OnOff is a function');
+	});
+
+	/* jQuery#onoff
+	---------------------------------------------------------------------- */
 	module('jQuery#onoff', {
 		setup: function() {
-			this.$inputs = $('input[type=checkbox]');
+			this.$inputs = $('#qunit-fixture input[type=checkbox]');
 		}
 	});
 
@@ -38,4 +69,111 @@
 		}, 'checkboxes');
 	});
 
-})(jQuery);
+	test('does not replace existing IDs', function() {
+		expect(1);
+		this.$inputs.onoff();
+		equal(this.$inputs.first().attr('id'), 'myonoffswitch', 'ID no overwritten');
+	});
+
+	/* Methods
+	---------------------------------------------------------------------- */
+	module('jQuery#onoff methods', setupInstance);
+
+	test('disable()/isDisabled()/enable()', function() {
+		expect(4);
+		this.$inputs.each(function() {
+			var $this = $(this);
+			$this.onoff('disable');
+			ok($this.onoff('isDisabled'), 'OnOff should be disabled');
+			$this.onoff('enable');
+			ok(!$this.onoff('isDisabled'), 'OnOff should be enabled');
+		});
+	});
+
+	test('destroy()', function() {
+		expect(4);
+		this.$inputs.each(function() {
+			var $this = $(this);
+			var instance = $this.onoff('instance');
+			$this.onoff('destroy');
+			equal($.data(this, OnOff.datakey), undefined, 'Data removed');
+			ok(instance.disabled, 'OnOff disabled');
+		});
+	});
+
+	test('unwrap()', function() {
+		expect(6);
+		this.$inputs.each(function() {
+			var $this = $(this).onoff('unwrap');
+			var instance = $this.onoff('instance');
+			equal($this.parent('.onoffswitch').length, 0, 'Container removed');
+			equal($this.next('label[for="' + this.id + '"]').length, 0, 'Label removed');
+			ok(instance.disabled, 'OnOff disabled');
+		});
+	});
+
+	test('wrap()', function() {
+		expect(2);
+		this.$inputs.each(function() {
+			var $this = $(this);
+			var instance = $this.onoff('instance');
+			equal(
+				$('<div/>').html(instance.$con.clone()).html()
+					.replace(/\s*checked="\w*"/, '')
+					.replace(/\s*id="\w*"/, '')
+					.replace(/\s*for="\w*"/, '')
+					.replace(/\s*name="\w*"/, ''),
+				['<div class="onoffswitch">',
+					'<input type="checkbox" class="onoffswitch-checkbox">',
+					'<label class="onoffswitch-label">',
+						'<div class="onoffswitch-inner"></div>',
+						'<div class="onoffswitch-switch"></div>',
+					'</label>',
+				'</div>'].join(''),
+				'Validate generated HTML'
+			);
+		});
+	});
+
+	/* Options
+	---------------------------------------------------------------------- */
+	module('jQuery#onoff options', setupInstance);
+
+	test('option()', function() {
+		expect(8);
+		this.$inputs.each(function() {
+			var options = $(this).onoff('option');
+			ok($.isPlainObject(options), 'Calling option() returns all options');
+			ok(~options.namespace.indexOf(OnOff.defaults.namespace), 'Event namespace starts with the default');
+			ok(/\d+$/.test(options.namespace), 'Namespace ends with uuid');
+			equal(options.className, OnOff.defaults.className, 'Event namespace is the default');
+		});
+	});
+
+	test('namespace', function() {
+		expect(4);
+		this.$inputs.each(function() {
+			var $this = $(this);
+			var ns = $this.onoff('option', 'namespace');
+			$this.onoff('option', 'namespace', 'newspace');
+			equal($this.onoff('option', 'namespace'), 'newspace', 'Namespace changed');
+			$this.onoff('option', 'namespace', ns);
+			equal($this.onoff('option', 'namespace'), ns, 'Namespace reset');
+		});
+	});
+
+	test('className', function() {
+		expect(10);
+		this.$inputs.each(function() {
+			var $this = $(this);
+			var cls = $this.onoff('option', 'className');
+			equal(cls, OnOff.defaults.className, 'Current className is the default');
+			$this.onoff('option', 'className', 'newclass');
+			ok($this.hasClass('newclass'), 'New class added to element');
+			ok(!$this.hasClass(cls), 'Old class removed');
+			$this.onoff('option', 'className', cls);
+			ok(!$this.hasClass('newclass'), 'New class removed');
+			ok($this.hasClass(cls), 'Old class added back');
+		});
+	});
+});
