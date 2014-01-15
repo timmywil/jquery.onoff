@@ -1,5 +1,7 @@
 # On-Off Toggle Switch
 
+[![Build Status](https://travis-ci.org/timmywil/jquery.onoff.png?branch=master)](https://travis-ci.org/timmywil/jquery.onoff)
+
 > Interactive, accessible toggle switches for the web
 
 Transform checkboxes into toggle switches.
