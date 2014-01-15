@@ -119,17 +119,21 @@ require({
 			var instance = $this.onoff('instance');
 			equal(
 				$('<div/>').html(instance.$con.clone()).html()
-					.replace(/\s*checked="\w*"/, '')
-					.replace(/\s*id="\w*"/, '')
-					.replace(/\s*for="\w*"/, '')
-					.replace(/\s*name="\w*"/, ''),
+					.replace(/\s*checked="\w*"/i, '')
+					.replace(/\s*id="\w*"/i, '')
+					.replace(/\s*for="\w*"/i, '')
+					.replace(/\s*value="\w*"/i, '')
+					.replace(/\s*type="\w*"/i, '')
+					.replace(/\s*name="\w*"/i, ''),
+
 				['<div class="onoffswitch">',
-					'<input type="checkbox" class="onoffswitch-checkbox">',
+					'<input class="onoffswitch-checkbox">',
 					'<label class="onoffswitch-label">',
 						'<div class="onoffswitch-inner"></div>',
 						'<div class="onoffswitch-switch"></div>',
 					'</label>',
 				'</div>'].join(''),
+
 				'Validate generated HTML'
 			);
 		});
