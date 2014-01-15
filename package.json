@@ -38,5 +38,8 @@
     "time-grunt": "~0.2.3",
     "grunt-contrib-sass": "~0.6.0",
     "grunt-autoprefixer": "~0.6.4"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }
