@@ -1,6 +1,15 @@
 {
   "name": "onoff",
   "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src",
+    "test",
+    "*.json",
+    "*.html",
+    "Gruntfile.js"
+  ],
   "dependencies": {},
   "devDependencies": {
     "qunit": "~1.12.0",
