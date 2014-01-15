@@ -1,6 +1,6 @@
 {
   "name": "onoff",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Interactive, accessible toggle switches for the web",
   "keywords": [
     "jquery-plugin",

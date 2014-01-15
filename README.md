@@ -26,9 +26,9 @@ However, note that IE9 does not support CSS transitions. The toggle switches, bu
 
 Download the [production version][min] (4kb) or the [development version][max] and grab the [CSS][css].
 
-[min]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.min.js
-[max]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.js
-[css]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.css
+[min]: https://raw.github.com/timmywil/jquery.onoff/0.1.0/dist/jquery.onoff.min.js
+[max]: https://raw.github.com/timmywil/jquery.onoff/0.1.0/dist/jquery.onoff.js
+[css]: https://raw.github.com/timmywil/jquery.onoff/0.1.0/dist/jquery.onoff.css
 
 ### With AMD
 
@@ -184,7 +184,7 @@ var instance = $input.onoff('instance');
 
 ## Release History
 
-**0.0.1** *1/15/2014* First release
+**0.1.0** *1/15/2014* First release
 
 ## Acknowledgements
 Thanks go out to the team at [proto.io](http://proto.io/) and their elegant CSS.

@@ -158,10 +158,8 @@ module.exports = function (grunt) {
 			// If this is the README, replace versions to download
 			if ( /README/.test(src) ) {
 				compiled = compiled
-					// Replace the version if not v1.1.0
-					.replace( /\bv\d+\.\d+\.\d+\b/g, function( all ) {
-						return all !== 'v1.1.0' ? 'v' + version : all;
-					});
+					// Replace versions in the URLs
+					.replace( /(\/[\w\.]+\/)\d+\.\d+\.\d+(\/[\w\.]+\/)/g, '$1' + version + '$2' );
 			} else {
 				// Replace version and date
 				compiled = compiled

@@ -2,7 +2,7 @@
   "name": "onoff",
   "title": "On-Off Toggle Switches",
   "description": "Interactive, accessible toggle switches for the web",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/timmywil/jquery.onoff",
   "author": {
     "name": "Timmy Willison",
