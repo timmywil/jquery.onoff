@@ -16,14 +16,11 @@ Customize the look of your toggle switch using [proto.io's generator](http://pro
 
 ## Getting Started
 
-# Not Yet Released
-
-<!-- Download the [production version][min](4kb) or the [development version][max] and grab the [CSS][css].
+Download the [production version][min](4kb) or the [development version][max] and grab the [CSS][css].
 
 [min]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.min.js
 [max]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.js
 [css]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.css
- -->
 
 ### With AMD
 
@@ -178,7 +175,8 @@ var instance = $input.onoff('instance');
 ```
 
 ## Release History
-_(Nothing yet)_
+
+**0.0.1** *1/15/2014* First release
 
 ## Acknowledgements
 Thanks go out to the team at [proto.io](http://proto.io/) and their elegant CSS.
