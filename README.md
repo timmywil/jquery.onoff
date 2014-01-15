@@ -22,7 +22,7 @@ However, note that IE9 does not support CSS transitions. The toggle switches, bu
 
 ## Getting Started
 
-Download the [production version][min](4kb) or the [development version][max] and grab the [CSS][css].
+Download the [production version][min] (4kb) or the [development version][max] and grab the [CSS][css].
 
 [min]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.min.js
 [max]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.js
