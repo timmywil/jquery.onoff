@@ -194,4 +194,4 @@ var instance = $input.onoff('instance');
 Thanks go out to the team at [proto.io](http://proto.io/) and their elegant CSS.
 
 ## License
-Copyright (c) 2013 Timmy Willison. Licensed under the MIT license.
+Copyright (c) 2014 Timmy Willison. Licensed under the MIT license.
