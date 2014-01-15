@@ -56,6 +56,14 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		csslint: {
+			options: {
+				csslintrc: '.csslintrc'
+			},
+			dist: {
+				src: 'dist/jquery.onoff.css'
+			}
+		},
 		jshint: {
 			gruntfile: {
 				options: {
@@ -121,7 +129,7 @@ module.exports = function (grunt) {
 			},
 			css: {
 				files: 'src/onoff.scss',
-				tasks: ['sass', 'autoprefixer']
+				tasks: ['sass', 'autoprefixer', 'csslint']
 			}
 		},
 		version: {
@@ -177,6 +185,7 @@ module.exports = function (grunt) {
 		'clean',
 		'sass',
 		'autoprefixer',
+		'csslint',
 		'jshint',
 		'version',
 		'concat',
