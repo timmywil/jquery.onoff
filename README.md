@@ -24,6 +24,8 @@ Supported browsers are the same as those supported by [jQuery 2](http://jquery.c
 
 However, note that IE9 does not support CSS transitions. The toggle switches, but does not animate.
 
+Pointer, touch, and mouse events are supported.
+
 ## Getting Started
 
 Download the [production version][min] (4kb) or the [development version][max] and grab the [CSS][css].
