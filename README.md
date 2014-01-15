@@ -50,7 +50,6 @@ jQuery(function($) {
 All you need is a checkbox:
 
 ```html
-// Start
 <input type="checkbox" />
 ```
 
