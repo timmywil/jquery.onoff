@@ -20,7 +20,7 @@
     }
   ],
   "dependencies": {
-    "jquery": "~1.10.0"
+    "jquery": ">=1.10.0"
   },
   "keywords": [
     "jquery-plugin",
