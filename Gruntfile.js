@@ -180,9 +180,9 @@ module.exports = function (grunt) {
 		'jshint',
 		'version',
 		'concat',
+		'uglify',
 		'connect',
-		'qunit',
-		'uglify'
+		'qunit'
 	]);
 	grunt.registerTask('server', ['connect', 'watch']);
 	grunt.registerTask('test', ['jshint', 'connect', 'qunit']);

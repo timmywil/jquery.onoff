@@ -18,7 +18,7 @@ Customize the look of your toggle switch using [proto.io's generator](http://pro
 
 # Not Yet Released
 
-<!-- Download the [production version][min] or the [development version][max] and grab the [CSS][css].
+<!-- Download the [production version][min](4kb) or the [development version][max] and grab the [CSS][css].
 
 [min]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.min.js
 [max]: https://raw.github.com/timmywil/jquery.onoff/0.0.1/dist/jquery.onoff.js
