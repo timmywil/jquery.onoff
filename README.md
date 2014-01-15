@@ -14,6 +14,12 @@ the toggle is purely CSS.
 
 Customize the look of your toggle switch using [proto.io's generator](http://proto.io/freebies/onoff/).
 
+## Browser support
+
+Supported browsers are the same as those supported by [jQuery 2](http://jquery.com/browser-support/). IE6-8 are not supported.
+
+However, note that IE9 does not support CSS transitions. The toggle switches, but does not animate.
+
 ## Getting Started
 
 Download the [production version][min](4kb) or the [development version][max] and grab the [CSS][css].
