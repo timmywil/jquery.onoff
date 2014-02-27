@@ -160,18 +160,12 @@ module.exports = function (grunt) {
 			var data = this.data;
 			var src = data.src;
 			var dest = data.dest || src;
-			var version = grunt.config('pkg.version');
 			var compiled = grunt.file.read( src );
-
-			// Replace version and date
-			compiled = compiled
-				// Replace version in JSON files
-				.replace( /("version":\s*")[^"]+/, '$1' + version );
 
 			var fixhook = fs.readFileSync(__dirname + '/pointertouch.js', 'utf8')
 				.replace(/\/\*\*[\w\W]*'use strict';\s*/, '')
 				.replace(/\s*return \w+;\s*\}\)\);\s*$/, '');
-			compiled = compiled
+			compiled = grunt.config('banner') + compiled
 				// Insert pointer/touch fixhook
 				.replace( /\/\/ INSERT FIXHOOK/, fixhook );
 

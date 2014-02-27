@@ -1,3 +1,6 @@
+/** onoff - v0.2.2 - 2014-02-27
+* https://github.com/timmywil/jquery.onoff
+* Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
 	// AMD
 	if (typeof define === 'function' && define.amd) {
