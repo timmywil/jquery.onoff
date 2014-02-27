@@ -6,15 +6,21 @@ module.exports = function (grunt) {
 	// Show elapsed time at the end
 	require('time-grunt')(grunt);
 
+	var _ = require('lodash');
+	var fs = require('graceful-fs');
+
 	// Project configuration
 	grunt.initConfig({
 		// Metadata
 		pkg: grunt.file.readJSON('package.json'),
-		banner: '/** <%= pkg.name %> - v<%= pkg.version %> - ' +
+		banner: _.template('/** <%= pkg.name %> - v<%= pkg.version %> - ' +
 			'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 			'<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
 			'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-			' Licensed MIT */\n',
+			' Licensed MIT */\n', {
+				grunt: grunt,
+				pkg: grunt.file.readJSON('package.json')
+			}),
 		// Task configuration
 		autoprefixer: {
 			onoff: {
@@ -24,25 +30,27 @@ module.exports = function (grunt) {
 		},
 		bowercopy: {
 			options: {
-				clean: true,
-				destPrefix: 'test/libs'
+				clean: true
 			},
 			test: {
+				options: {
+					destPrefix: 'test/libs'
+				},
 				files: {
 					'jquery.js': 'jquery/jquery.js',
 					'qunit': 'qunit/qunit',
 					'require.js': 'requirejs/require.js'
 				}
+			},
+			pointertouch: {
+				src: 'jquery.event.pointertouch/dist/jquery.event.pointertouch.js',
+				dest: 'pointertouch.js'
 			}
 		},
 		clean: {
 			files: ['dist']
 		},
-		concat: {
-			options: {
-				banner: '<%= banner %>',
-				stripBanners: true
-			},
+		build: {
 			dist: {
 				src: ['src/<%= pkg.name %>.js'],
 				dest: 'dist/jquery.<%= pkg.name %>.js'
@@ -110,7 +118,7 @@ module.exports = function (grunt) {
 				banner: '<%= banner %>'
 			},
 			dist: {
-				src: '<%= concat.dist.dest %>',
+				src: '<%= build.dist.dest %>',
 				dest: 'dist/jquery.<%= pkg.name %>.min.js'
 			}
 		},
@@ -144,6 +152,35 @@ module.exports = function (grunt) {
 			}
 		}
 	});
+
+	grunt.registerMultiTask(
+		'build',
+		'Build jquery.panzoom and package manifest',
+		function() {
+			var data = this.data;
+			var src = data.src;
+			var dest = data.dest || src;
+			var version = grunt.config('pkg.version');
+			var compiled = grunt.file.read( src );
+
+			// Replace version and date
+			compiled = compiled
+				// Replace version in JSON files
+				.replace( /("version":\s*")[^"]+/, '$1' + version );
+
+			var fixhook = fs.readFileSync(__dirname + '/pointertouch.js', 'utf8')
+				.replace(/\/\*\*[\w\W]*'use strict';\s*/, '')
+				.replace(/\s*return \w+;\s*\}\)\);\s*$/, '');
+			compiled = compiled
+				// Insert pointer/touch fixhook
+				.replace( /\/\/ INSERT FIXHOOK/, fixhook );
+
+			// Write source to file
+			grunt.file.write( dest, compiled );
+
+			grunt.log.ok( 'File written to ' + dest );
+		}
+	);
 
 	grunt.registerMultiTask(
 		'version',
@@ -186,7 +223,7 @@ module.exports = function (grunt) {
 		'csslint',
 		'jshint',
 		'version',
-		'concat',
+		'build',
 		'uglify',
 		'connect',
 		'qunit'

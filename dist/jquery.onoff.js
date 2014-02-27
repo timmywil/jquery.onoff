@@ -1,6 +1,3 @@
-/** onoff - v0.1.0 - 2014-01-15
-* https://github.com/timmywil/jquery.onoff
-* Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
 	// AMD
 	if (typeof define === 'function' && define.amd) {
@@ -15,31 +12,53 @@
 }(this, function($) {
 	'use strict';
 
-	// Lift touch properties using fixHooks
-	var touchHook = {
-		props: [ 'clientX', 'clientY' ],
-		/**
-		 * Support: Android
-		 * Android sets clientX/Y to 0 for any touch event
-		 * Attach first touch's clientX/Y if not set correctly
-		 */
-		filter: function( event, originalEvent ) {
-			var touch;
-			if ( !originalEvent.clientX && originalEvent.touches && (touch = originalEvent.touches[0]) ) {
-				event.clientX = touch.clientX;
-				event.clientY = touch.clientY;
-			}
-			return event;
+	// Common properties to lift for touch or pointer events
+	var props = [ 'pageX', 'pageY', 'clientX', 'clientY' ];
+	var hook = { props: props };
+	var events = {};
+
+	// Support pointer events in IE11+ if available
+	if ( window.PointerEvent ) {
+		$.each([ 'pointerdown', 'pointermove', 'pointerup' ], function( i, name ) {
+			// Add event name to events property
+			events[ name.replace('pointer', '') ] = name;
+			// Add fixHook
+			$.event.fixHooks[ name ] = hook;
+		});
+	}
+
+	// Add touches property for the touch hook
+	props.push('touches');
+
+	/**
+	 * Support: Android
+	 * Android sets pageX/Y to 0 for any touch event
+	 * Attach first touch's pageX/pageY and clientX/clientY if not set correctly
+	 */
+	hook.filter = function( event, originalEvent ) {
+		var touch;
+		if ( !originalEvent.pageX && originalEvent.touches && (touch = originalEvent.touches[0]) ) {
+			event.pageX = touch.pageX;
+			event.pageY = touch.pageY;
+			event.clientX = touch.clientX;
+			event.clientY = touch.clientY;
 		}
+		return event;
 	};
-	$.each([ 'touchstart', 'touchmove', 'touchend' ], function( i, name ) {
-		$.event.fixHooks[ name ] = touchHook;
+
+	$.each({
+		mousedown: 'touchstart',
+		mousemove: 'touchmove',
+		mouseup: 'touchend'
+	}, function( mouse, touch ) {
+		// Add event names to events property
+		events[ mouse.replace('mouse', '') ] = mouse + ' ' + touch;
+		// Add fixHook
+		$.event.fixHooks[ touch ] = hook;
 	});
 
 	var count = 1;
 	var slice = Array.prototype.slice;
-	// Support pointer events if available
-	var pointerEvents = !!window.PointerEvent;
 
 	/**
 	 * Create an OnOff object for a given element
@@ -172,7 +191,7 @@
 			// Prevent default to avoid touch event collision
 			e.preventDefault();
 			var moveType, endType;
-			if (pointerEvents) {
+			if (e.type === 'pointerdown') {
 				moveType = 'pointermove';
 				endType = 'pointerup';
 			} else if (e.type === 'touchstart') {
@@ -226,7 +245,7 @@
 		 */
 		_bind: function() {
 			this._unbind();
-			var type = pointerEvents ? 'pointerdown' : 'mousedown touchstart';
+			var type = events.down;
 			this.$switch.on(type, $.proxy(this._startMove, this));
 		},
 

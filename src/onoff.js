@@ -1,11 +1,3 @@
-/**
- * @license jquery.onoff.js v0.0.1
- * Updated: Mon Jan 13 2014
- * Accessible, interactive, touch-enabled toggle switches
- * Copyright (c) 2014 timmy willison
- * Released under the MIT license
- */
-
 (function(global, factory) {
 	// AMD
 	if (typeof define === 'function' && define.amd) {
@@ -20,31 +12,10 @@
 }(this, function($) {
 	'use strict';
 
-	// Lift touch properties using fixHooks
-	var touchHook = {
-		props: [ 'clientX', 'clientY' ],
-		/**
-		 * Support: Android
-		 * Android sets clientX/Y to 0 for any touch event
-		 * Attach first touch's clientX/Y if not set correctly
-		 */
-		filter: function( event, originalEvent ) {
-			var touch;
-			if ( !originalEvent.clientX && originalEvent.touches && (touch = originalEvent.touches[0]) ) {
-				event.clientX = touch.clientX;
-				event.clientY = touch.clientY;
-			}
-			return event;
-		}
-	};
-	$.each([ 'touchstart', 'touchmove', 'touchend' ], function( i, name ) {
-		$.event.fixHooks[ name ] = touchHook;
-	});
+	// INSERT FIXHOOK
 
 	var count = 1;
 	var slice = Array.prototype.slice;
-	// Support pointer events if available
-	var pointerEvents = !!window.PointerEvent;
 
 	/**
 	 * Create an OnOff object for a given element
@@ -177,7 +148,7 @@
 			// Prevent default to avoid touch event collision
 			e.preventDefault();
 			var moveType, endType;
-			if (pointerEvents) {
+			if (e.type === 'pointerdown') {
 				moveType = 'pointermove';
 				endType = 'pointerup';
 			} else if (e.type === 'touchstart') {
@@ -231,7 +202,7 @@
 		 */
 		_bind: function() {
 			this._unbind();
-			var type = pointerEvents ? 'pointerdown' : 'mousedown touchstart';
+			var type = events.down;
 			this.$switch.on(type, $.proxy(this._startMove, this));
 		},
 
