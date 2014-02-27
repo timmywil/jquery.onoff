@@ -57,6 +57,8 @@
 		$.event.fixHooks[ touch ] = hook;
 	});
 
+	$.pointertouch = events;
+
 	var count = 1;
 	var slice = Array.prototype.slice;
 
@@ -245,7 +247,7 @@
 		 */
 		_bind: function() {
 			this._unbind();
-			var type = events.down;
+			var type = $.pointertouch.down;
 			this.$switch.on(type, $.proxy(this._startMove, this));
 		},
 

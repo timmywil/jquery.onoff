@@ -202,7 +202,7 @@
 		 */
 		_bind: function() {
 			this._unbind();
-			var type = events.down;
+			var type = $.pointertouch.down;
 			this.$switch.on(type, $.proxy(this._startMove, this));
 		},
 

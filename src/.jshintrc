@@ -13,7 +13,6 @@
   "globals": {
     "define": true,
     "require": true,
-    "console": false,
-    "events": true
+    "console": false
   }
 }
