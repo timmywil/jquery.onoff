@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 			},
 			pointertouch: {
 				src: 'jquery.event.pointertouch/dist/jquery.event.pointertouch.js',
-				dest: 'pointertouch.js'
+				dest: 'src/pointertouch.js'
 			}
 		},
 		clean: {
@@ -162,7 +162,7 @@ module.exports = function (grunt) {
 			var dest = data.dest || src;
 			var compiled = grunt.file.read( src );
 
-			var fixhook = fs.readFileSync(__dirname + '/pointertouch.js', 'utf8')
+			var fixhook = fs.readFileSync(__dirname + '/src/pointertouch.js', 'utf8')
 				.replace(/\/\*\*[\w\W]*'use strict';\s*/, '')
 				.replace(/\s*return \w+;\s*\}\)\);\s*$/, '');
 			compiled = grunt.config('banner') + compiled
