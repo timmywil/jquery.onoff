@@ -188,7 +188,7 @@ var instance = $input.onoff('instance');
 
 ## Release History
 
-**0.2.4** *3/3/2014* Integrate [jquery.event.pointertouch](https://github.com/timmywil/jquery.event.pointertouch) into build.
+**0.2.4** *3/3/2014* Integrate [jquery.event.pointertouch](https://github.com/timmywil/jquery.event.pointertouch) into build.  
 **0.1.0** *1/15/2014* First release
 
 ## Acknowledgements
