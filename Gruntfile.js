@@ -52,8 +52,8 @@ module.exports = function (grunt) {
 		},
 		build: {
 			dist: {
-				src: ['src/<%= pkg.name %>.js'],
-				dest: 'dist/jquery.<%= pkg.name %>.js'
+				src: ['src/onoff.js'],
+				dest: 'dist/<%= pkg.name %>.js'
 			}
 		},
 		connect: {
@@ -84,6 +84,12 @@ module.exports = function (grunt) {
 					jshintrc: 'src/.jshintrc'
 				},
 				src: ['src/**/*.js']
+			},
+			dist: {
+				options: {
+					jshintrc: 'src/.jshintrc'
+				},
+				src: ['dist/jquery.onoff.js']
 			},
 			test: {
 				options: {
@@ -119,7 +125,7 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				src: '<%= build.dist.dest %>',
-				dest: 'dist/jquery.<%= pkg.name %>.min.js'
+				dest: 'dist/<%= pkg.name %>.min.js'
 			}
 		},
 		watch: {
@@ -215,9 +221,9 @@ module.exports = function (grunt) {
 		'sass',
 		'autoprefixer',
 		'csslint',
-		'jshint',
 		'version',
 		'build',
+		'jshint',
 		'uglify',
 		'connect',
 		'qunit'
