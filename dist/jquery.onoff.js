@@ -1,4 +1,4 @@
-/** onoff - v0.2.3 - 2014-02-27
+/** onoff - v0.2.3 - 2014-03-03
 * https://github.com/timmywil/jquery.onoff
 * Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
@@ -250,8 +250,10 @@
 		 */
 		_bind: function() {
 			this._unbind();
-			var type = $.pointertouch.down;
-			this.$switch.on(type, $.proxy(this._startMove, this));
+			this.$switch.on(
+				$.pointertouch.down,
+				$.proxy(this._startMove, this)
+			);
 		},
 
 		/**
@@ -268,9 +270,7 @@
 		 * Unbind all events
 		 */
 		_unbind: function() {
-			var ns = this.options.namespace;
-			this.$doc.off(ns);
-			this.$switch.off(ns);
+			this.$doc.add(this.$switch).off(this.options.namespace);
 		},
 
 		/**

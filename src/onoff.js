@@ -202,8 +202,10 @@
 		 */
 		_bind: function() {
 			this._unbind();
-			var type = $.pointertouch.down;
-			this.$switch.on(type, $.proxy(this._startMove, this));
+			this.$switch.on(
+				$.pointertouch.down,
+				$.proxy(this._startMove, this)
+			);
 		},
 
 		/**
@@ -220,9 +222,7 @@
 		 * Unbind all events
 		 */
 		_unbind: function() {
-			var ns = this.options.namespace;
-			this.$doc.off(ns);
-			this.$switch.off(ns);
+			this.$doc.add(this.$switch).off(this.options.namespace);
 		},
 
 		/**
