@@ -60,7 +60,7 @@ module.exports = function (grunt) {
 			server: {
 				options: {
 					hostname: '*',
-					port: 9000
+					port: 9001
 				}
 			}
 		},
@@ -106,7 +106,7 @@ module.exports = function (grunt) {
 		qunit: {
 			all: {
 				options: {
-					urls: ['http://localhost:9000/test/index.html']
+					urls: ['http://localhost:9001/test/index.html']
 				}
 			}
 		},
@@ -135,11 +135,11 @@ module.exports = function (grunt) {
 			},
 			src: {
 				files: '<%= jshint.src.src %>',
-				tasks: ['jshint:src', 'concat', 'qunit']
+				tasks: ['jshint:src', 'build', 'connect', 'qunit']
 			},
 			test: {
 				files: ['<%= jshint.test.src %>', 'test/index.html'],
-				tasks: ['jshint:test', 'qunit']
+				tasks: ['jshint:test', 'connect', 'qunit']
 			},
 			css: {
 				files: 'src/onoff.scss',
