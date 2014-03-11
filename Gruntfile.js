@@ -175,6 +175,11 @@ module.exports = function (grunt) {
 				// Insert pointer/touch fixhook
 				.replace( /\/\/ INSERT FIXHOOK/, fixhook );
 
+			// Remove pointerhook dependency
+			compiled = compiled
+				.replace(', \'./pointertouch\'', '')
+				.replace(', require(\'./pointertouch\')', '');
+
 			// Write source to file
 			grunt.file.write( dest, compiled );
 
