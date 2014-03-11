@@ -161,6 +161,7 @@
 				endType = 'mouseup';
 			}
 			var elem = this.elem;
+			var $elem = this.$elem;
 			var ns = this.options.namespace;
 			// Disable transitions
 			var $handle = this.$switch;
@@ -190,7 +191,12 @@
 						// If there was a move
 						// ensure the proper checked value
 						if (self.moved) {
-							elem.checked = self.lastX > (self.startX - self.maxRight / 2);
+							var checked = self.lastX > (self.startX - self.maxRight / 2);
+							if (elem.checked !== checked) {
+								elem.checked = checked;
+								// Trigger change in case it wasn't already fired
+								$elem.trigger('change');
+							}
 						}
 						// Normalize CSS and animate
 						self.$switch.css('right', '');
