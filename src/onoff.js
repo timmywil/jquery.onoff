@@ -92,12 +92,14 @@
 		wrap: function() {
 			var elem = this.elem;
 			var $elem = this.$elem;
+			var options = this.options;
 
 			// Get or create elem wrapper
 			var $con = $elem.parent('.onoffswitch');
 			if (!$con.length) {
 				$elem.wrap('<div class="onoffswitch"></div>');
-				$con = $elem.parent();
+				$con = $elem.parent()
+					.addClass(elem.className.replace(options.className, ''));
 			}
 			this.$con = $con;
 
@@ -242,7 +244,7 @@
 			// Destroys this OnOff
 			this.disable();
 			this.$label.remove();
-			this.$elem.unwrap();
+			this.$elem.unwrap().removeClass(this.options.className);
 		},
 
 		/**

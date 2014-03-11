@@ -75,6 +75,14 @@ require({
 		equal(this.$inputs.first().attr('id'), 'myonoffswitch', 'ID no overwritten');
 	});
 
+	test('created container inherits classes from the input', function() {
+		expect(2);
+		var cls = 'extra-class';
+		this.$inputs.addClass(cls).onoff().each(function() {
+			ok(this.parentNode.className.indexOf(cls) > -1, 'Parent has class');
+		}).removeClass(cls);
+	});
+
 	/* Methods
 	---------------------------------------------------------------------- */
 	module('jQuery#onoff methods', setupInstance);

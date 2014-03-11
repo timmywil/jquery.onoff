@@ -1,4 +1,4 @@
-/** jquery.onoff - v0.3.1 - 2014-03-04
+/** jquery.onoff - v0.3.1 - 2014-03-11
 * https://github.com/timmywil/jquery.onoff
 * Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
@@ -146,12 +146,14 @@
 		wrap: function() {
 			var elem = this.elem;
 			var $elem = this.$elem;
+			var options = this.options;
 
 			// Get or create elem wrapper
 			var $con = $elem.parent('.onoffswitch');
 			if (!$con.length) {
 				$elem.wrap('<div class="onoffswitch"></div>');
-				$con = $elem.parent();
+				$con = $elem.parent()
+					.addClass(elem.className.replace(options.className, ''));
 			}
 			this.$con = $con;
 
@@ -296,7 +298,7 @@
 			// Destroys this OnOff
 			this.disable();
 			this.$label.remove();
-			this.$elem.unwrap();
+			this.$elem.unwrap().removeClass(this.options.className);
 		},
 
 		/**
