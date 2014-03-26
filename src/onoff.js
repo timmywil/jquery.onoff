@@ -80,7 +80,7 @@
 		constructor: OnOff,
 
 		/**
-		 * @returns {Panzoom} Returns the instance
+		 * @returns {OnOff} Returns the instance
 		 */
 		instance: function() {
 			return this;
