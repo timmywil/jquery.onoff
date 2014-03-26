@@ -1,4 +1,4 @@
-/** jquery.onoff - v0.3.3 - 2014-03-11
+/** jquery.onoff - v0.3.4 - 2014-03-26
 * https://github.com/timmywil/jquery.onoff
 * Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
@@ -50,7 +50,6 @@
 			return event;
 		};
 
-		// Take off 'over' and 'out' when attaching touch hooks
 		$.each(list, function( i, name ) {
 			// No equivalent touch events for over and out
 			if (i < 2) {
@@ -134,7 +133,7 @@
 		constructor: OnOff,
 
 		/**
-		 * @returns {Panzoom} Returns the instance
+		 * @returns {OnOff} Returns the instance
 		 */
 		instance: function() {
 			return this;
