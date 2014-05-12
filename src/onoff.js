@@ -137,7 +137,7 @@
 		_handleMove: function(e) {
 			if (this.disabled) return;
 			this.moved = true;
-			this.lastX = e.clientX;
+			this.lastX = e.pageX;
 			var right = Math.max(Math.min(this.startX - this.lastX, this.maxRight), 0);
 			this.$switch.css('right', right);
 			this.$inner.css('marginLeft', -(right / this.maxRight) * 100 + '%');
@@ -176,7 +176,7 @@
 				$.css(handle, 'border-right-width', true);
 			var startChecked = elem.checked;
 			this.moved = false;
-			this.startX = e.clientX + (startChecked ? 0 : this.maxRight);
+			this.startX = e.pageX + (startChecked ? 0 : this.maxRight);
 
 			// Bind document events
 			var self = this;

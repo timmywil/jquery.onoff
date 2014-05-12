@@ -1,4 +1,4 @@
-/** jquery.onoff - v0.3.4 - 2014-03-26
+/** jquery.onoff - v0.3.4 - 2014-05-12
 * https://github.com/timmywil/jquery.onoff
 * Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
@@ -190,7 +190,7 @@
 		_handleMove: function(e) {
 			if (this.disabled) return;
 			this.moved = true;
-			this.lastX = e.clientX;
+			this.lastX = e.pageX;
 			var right = Math.max(Math.min(this.startX - this.lastX, this.maxRight), 0);
 			this.$switch.css('right', right);
 			this.$inner.css('marginLeft', -(right / this.maxRight) * 100 + '%');
@@ -229,7 +229,7 @@
 				$.css(handle, 'border-right-width', true);
 			var startChecked = elem.checked;
 			this.moved = false;
-			this.startX = e.clientX + (startChecked ? 0 : this.maxRight);
+			this.startX = e.pageX + (startChecked ? 0 : this.maxRight);
 
 			// Bind document events
 			var self = this;
