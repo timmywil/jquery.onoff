@@ -188,12 +188,12 @@ var instance = $input.onoff('instance');
 
 ## Release History
 
-**0.3.5** *5/12/2014* Fixed regression with iOS devices
-**0.3.4** *3/26/2014* Update pointertouch
-**0.3.3** *3/11/2014* Fire change event when checked is changed async
-**0.3.2** *3/11/2014* Container now inherits classes from the checkbox
-**0.3.1** *3/3/2014* Minor pointertouch update
-**0.3.0** *3/3/2014* Update to full-blown pointertouch
+**0.3.5** *5/12/2014* Fixed regression with iOS devices  
+**0.3.4** *3/26/2014* Update pointertouch  
+**0.3.3** *3/11/2014* Fire change event when checked is changed async  
+**0.3.2** *3/11/2014* Container now inherits classes from the checkbox  
+**0.3.1** *3/3/2014* Minor pointertouch update  
+**0.3.0** *3/3/2014* Update to full-blown pointertouch  
 **0.2.4** *3/3/2014* Integrate [jquery.event.pointertouch](https://github.com/timmywil/jquery.event.pointertouch) into build.  
 **0.1.0** *1/15/2014* First release
 
