@@ -1,4 +1,4 @@
-/** jquery.onoff - v0.3.4 - 2014-05-12
+/** jquery.onoff - v0.3.5 - 2014-05-12
 * https://github.com/timmywil/jquery.onoff
 * Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
