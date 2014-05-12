@@ -57,10 +57,17 @@ module.exports = function (grunt) {
 			}
 		},
 		connect: {
+			options: {
+				hostname: '*'
+			},
 			server: {
 				options: {
-					hostname: '*',
 					port: 9001
+				}
+			},
+			test: {
+				options: {
+					port: 9002
 				}
 			}
 		},
@@ -135,11 +142,11 @@ module.exports = function (grunt) {
 			},
 			src: {
 				files: '<%= jshint.src.src %>',
-				tasks: ['jshint:src', 'build', 'connect', 'qunit']
+				tasks: ['jshint:src', 'build', 'connect:test', 'qunit']
 			},
 			test: {
 				files: ['<%= jshint.test.src %>', 'test/index.html'],
-				tasks: ['jshint:test', 'connect', 'qunit']
+				tasks: ['jshint:test', 'connect:test', 'qunit']
 			},
 			css: {
 				files: 'src/onoff.scss',
@@ -230,9 +237,9 @@ module.exports = function (grunt) {
 		'build',
 		'jshint',
 		'uglify',
-		'connect',
+		'connect:test',
 		'qunit'
 	]);
-	grunt.registerTask('server', ['connect', 'watch']);
-	grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
+	grunt.registerTask('server', ['connect:server', 'watch']);
+	grunt.registerTask('test', ['jshint', 'connect:test', 'qunit']);
 };
