@@ -30,9 +30,9 @@ Pointer, touch, and mouse events are supported.
 
 Download the [production version][min] (4kb) or the [development version][max] and grab the [CSS][css].
 
-[min]: https://raw.github.com/timmywil/jquery.onoff/0.3.5/dist/jquery.onoff.min.js
-[max]: https://raw.github.com/timmywil/jquery.onoff/0.3.5/dist/jquery.onoff.js
-[css]: https://raw.github.com/timmywil/jquery.onoff/0.3.5/dist/jquery.onoff.css
+[min]: https://raw.github.com/timmywil/jquery.onoff/0.3.6/dist/jquery.onoff.min.js
+[max]: https://raw.github.com/timmywil/jquery.onoff/0.3.6/dist/jquery.onoff.js
+[css]: https://raw.github.com/timmywil/jquery.onoff/0.3.6/dist/jquery.onoff.css
 
 ### With AMD
 
@@ -188,6 +188,7 @@ var instance = $input.onoff('instance');
 
 ## Release History
 
+**0.3.6** *6/23/2014* Updated `package.json`  
 **0.3.5** *5/12/2014* Fixed regression with iOS devices  
 **0.3.4** *3/26/2014* Update pointertouch  
 **0.3.3** *3/11/2014* Fire change event when checked is changed async  

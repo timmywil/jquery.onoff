@@ -1,7 +1,23 @@
 {
   "name": "jquery.onoff",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Interactive, accessible toggle switches for the web",
+  "repository": "timmywil/jquery.onoff",
+  "license": "MIT",
+  "main": [
+    "dist/jquery.onoff.js",
+    "dist/jquery.onoff.css"
+  ],
+  "files": [
+    "MIT-License.txt",
+    "dist/jquery.onoff.js",
+    "dist/jquery.onoff.css",
+    "dist/jquery.onoff.min.js",
+    "src/onoff.scss",
+    "src/onoff.js",
+    "src/pointertouch.js",
+    "index.html"
+  ],
   "keywords": [
     "jquery-plugin",
     "toggle",
@@ -14,15 +30,6 @@
     "email": "timmywillisn@gmail.com",
     "url": "https://github.com/timmywil"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/timmywil/jquery.onoff.git"
-  },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-autoprefixer": "~0.6.4",
