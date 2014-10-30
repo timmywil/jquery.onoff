@@ -1,6 +1,6 @@
 {
   "name": "jquery.onoff",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "Interactive, accessible toggle switches for the web",
   "repository": "timmywil/jquery.onoff",
   "license": "MIT",

@@ -137,8 +137,8 @@ require({
 				['<div class="onoffswitch">',
 					'<input class="onoffswitch-checkbox">',
 					'<label class="onoffswitch-label">',
-						'<div class="onoffswitch-inner"></div>',
-						'<div class="onoffswitch-switch"></div>',
+						'<span class="onoffswitch-inner"></span>',
+						'<span class="onoffswitch-switch"></span>',
 					'</label>',
 				'</div>'].join(''),
 

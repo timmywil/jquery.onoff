@@ -25,6 +25,7 @@
 }
 
 .onoffswitch-inner {
+  display: block;
   width: 200%;
   margin-left: -100%;
   -webkit-transition: margin 0.2s ease-in;
@@ -60,6 +61,7 @@
 
 .onoffswitch-switch {
   position: absolute;
+  display: block;
   top: 0;
   bottom: 0;
   right: 40px;

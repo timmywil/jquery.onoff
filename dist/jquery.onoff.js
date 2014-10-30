@@ -1,4 +1,4 @@
-/** jquery.onoff - v0.3.6 - 2014-06-23
+/** jquery.onoff - v0.4.0 - 2014-10-30
 * https://github.com/timmywil/jquery.onoff
 * Copyright (c) 2014 Timmy Willison; Licensed MIT */
 (function(global, factory) {
@@ -168,7 +168,7 @@
 			// Inner
 			var $inner = $label.find('.onoffswitch-inner');
 			if (!$inner.length) {
-				$inner = $('<div/>')
+				$inner = $('<span/>')
 					.addClass('onoffswitch-inner')
 					.prependTo($label);
 			}
@@ -177,7 +177,7 @@
 			// Switch
 			var $switch = $label.find('.onoffswitch-switch');
 			if (!$switch.length) {
-				$switch = $('<div/>')
+				$switch = $('<span/>')
 					.addClass('onoffswitch-switch')
 					.appendTo($label);
 			}

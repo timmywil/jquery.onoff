@@ -115,7 +115,7 @@
 			// Inner
 			var $inner = $label.find('.onoffswitch-inner');
 			if (!$inner.length) {
-				$inner = $('<div/>')
+				$inner = $('<span/>')
 					.addClass('onoffswitch-inner')
 					.prependTo($label);
 			}
@@ -124,7 +124,7 @@
 			// Switch
 			var $switch = $label.find('.onoffswitch-switch');
 			if (!$switch.length) {
-				$switch = $('<div/>')
+				$switch = $('<span/>')
 					.addClass('onoffswitch-switch')
 					.appendTo($label);
 			}

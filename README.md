@@ -30,9 +30,9 @@ Pointer, touch, and mouse events are supported.
 
 Download the [production version][min] (4kb) or the [development version][max] and grab the [CSS][css].
 
-[min]: https://raw.github.com/timmywil/jquery.onoff/0.3.6/dist/jquery.onoff.min.js
-[max]: https://raw.github.com/timmywil/jquery.onoff/0.3.6/dist/jquery.onoff.js
-[css]: https://raw.github.com/timmywil/jquery.onoff/0.3.6/dist/jquery.onoff.css
+[min]: https://raw.github.com/timmywil/jquery.onoff/0.4.0/dist/jquery.onoff.min.js
+[max]: https://raw.github.com/timmywil/jquery.onoff/0.4.0/dist/jquery.onoff.js
+[css]: https://raw.github.com/timmywil/jquery.onoff/0.4.0/dist/jquery.onoff.css
 
 ### With AMD
 
@@ -68,8 +68,8 @@ However, you can also start with the generated HTML to avoid [FOUC](http://en.wi
 <div class="onoffswitch">
   <input type="checkbox" class="onoffswitch-checkbox" id="myonoffswitch" />
   <label class="onoffswitch-label" for="myonoffswitch">
-    <div class="onoffswitch-inner"></div>
-    <div class="onoffswitch-switch"></div>
+    <span class="onoffswitch-inner"></span>
+    <span class="onoffswitch-switch"></span>
   </label>
 </div>
 ```
@@ -188,15 +188,16 @@ var instance = $input.onoff('instance');
 
 ## Release History
 
-**0.3.6** *6/23/2014* Updated `package.json`  
-**0.3.5** *5/12/2014* Fixed regression with iOS devices  
-**0.3.4** *3/26/2014* Update pointertouch  
-**0.3.3** *3/11/2014* Fire change event when checked is changed async  
-**0.3.2** *3/11/2014* Container now inherits classes from the checkbox  
-**0.3.1** *3/3/2014* Minor pointertouch update  
-**0.3.0** *3/3/2014* Update to full-blown pointertouch  
-**0.2.4** *3/3/2014* Integrate [jquery.event.pointertouch](https://github.com/timmywil/jquery.event.pointertouch) into build.  
-**0.1.0** *1/15/2014* First release
+- **0.4.0** *10/30/2014* Corrected content inside label element
+- **0.3.6** *6/23/2014* Updated `package.json`
+- **0.3.5** *5/12/2014* Fixed regression with iOS devices
+- **0.3.4** *3/26/2014* Update pointertouch
+- **0.3.3** *3/11/2014* Fire change event when checked is changed async
+- **0.3.2** *3/11/2014* Container now inherits classes from the checkbox
+- **0.3.1** *3/3/2014* Minor pointertouch update
+- **0.3.0** *3/3/2014* Update to full-blown pointertouch
+- **0.2.4** *3/3/2014* Integrate [jquery.event.pointertouch](https://github.com/timmywil/jquery.event.pointertouch) into build.
+- **0.1.0** *1/15/2014* First release
 
 ## Acknowledgements
 Thanks go out to the team at [proto.io](http://proto.io/) and their elegant CSS.

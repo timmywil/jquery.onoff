@@ -32,6 +32,7 @@ $switchMargin: 4px;
 }
 
 .onoffswitch-inner {
+  display: block;
 	width: 200%;
 	margin-left: -100%;
 	transition: margin $animationTime $easing;
@@ -62,6 +63,7 @@ $switchMargin: 4px;
 
 .onoffswitch-switch {
 	position: absolute;
+  display: block;
 	top: 0; bottom: 0;
 	right: $width - $switchWidth - ($switchMargin * 2) - ($borderSize * 2);
 	width: $switchWidth; margin: $switchMargin;
