@@ -6,7 +6,7 @@
 
 Transform checkboxes into toggle switches.
 
-[![Toggle Switch](http://f.cl.ly/items/2P1i0A1N1v003A1O3S2Q/Screen%20Shot%202014-01-15%20at%202.54.24%20PM.png)](http://timmywil.github.io/jquery.onoff/)
+[![Toggle Switch](http://f.cl.ly/items/2P1i0A1N1v003A1O3S2Q/Screen%20Shot%202014-01-15%20at%202.54.24%20PM.png)](http://timmywil.github.io/jquery.onoff/) [![Greenkeeper badge](https://badges.greenkeeper.io/timmywil/jquery.onoff.svg)](https://greenkeeper.io/)
 
 Toggle switches made for the web are often solely constructed
 to change when clicked or tapped,
