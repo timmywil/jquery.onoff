@@ -45,7 +45,7 @@
     "grunt-jsonlint": "~1.0.4",
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "~0.2.3",
-    "lodash": "~2.4.1",
+    "lodash": "~4.17.19",
     "graceful-fs": "~2.0.2"
   },
   "scripts": {
